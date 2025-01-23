@@ -6,7 +6,7 @@ const isAuthenticated = require('../utils/loginMiddleware')
 
 
 router.get('/', isAuthenticated, (req, res) => {
-    res.render('pages/index', { user: req.user })
+    res.render('pages/index')
 })
 
 router.get('/addCategory', isAuthenticated, (req, res) => {
@@ -40,25 +40,8 @@ router.get('/logout', isAuthenticated, (req, res) => {
 })
 
 router.get('/myprofile', isAuthenticated, async (req, res) => {
-    const email = cookieData.email
-    const singleAdmin = await Admin.findOne({ email })
-
-    const obj1 = {
-        id: 123
-    }
-
-    const obj2 = {
-        name: "xyz"
-    }
-    const output = Object.assign(obj1, obj2)
-    const output2 = { ...obj1, ...obj2 }
-
-
-    console.log(output)
-    console.log(output2)
-
-
-    res.render('pages/myProfile', { admin: singleAdmin })
+    const singleAdmin = await Admin.findOne({ email:req.user.email })
+    res.render('pages/myProfile',{admin:singleAdmin})
 })
 
 module.exports = router

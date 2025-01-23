@@ -3,39 +3,38 @@ const { hashToPlain } = require('../utils/password');
 
 const LocalStrategy = require('passport-local').Strategy
 
-module.exports = function (passport) {
-    passport.use(
-      new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-        try {
-          const user = await Admin.findOne({ email });
-          if (!user) {
-            return done(null, false, { message: 'No user found' });
-          }
-  
-          // const isMatch = await user.matchPassword(password);
-          const isMatch = await hashToPlain(password, user.password)
-          if (!isMatch) {
-            return done(null, false, { message: 'Incorrect password' });
-          }
-  
-          return done(null, user);
-        } catch (err) {
-          return done(err);
-        }
-      })
-    );
-  
-  
-    passport.serializeUser((user, done) => {
-      done(null, user.id);
-    });
-  
-    passport.deserializeUser(async (id, done) => {
-      try {
-        const user = await Admin.findById(id);
-        done(null, user);
-      } catch (err) {
-        done(err);
-      }
-    });
-  };
+module.exports = (passport) => {
+
+  passport.use(
+    new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+     try {
+       const admin = await Admin.findOne({ email });
+       if (!admin) {
+         return done(null, false, console.log("user not found"))
+       }
+ 
+       const match = await hashToPlain(password, admin.password);
+       if (!match) {
+         return done(null, false, console.log("password not match"))
+       }
+ 
+       done(null,admin)
+     } catch (error) {
+      console.log(error)
+     }
+    })
+  )
+
+  passport.serializeUser((admin, done) => {
+    done(null, admin.id);
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const admin = await Admin.findById(id);
+      done(null, admin);
+    } catch (err) {
+      done(err);
+    }
+  });
+};
