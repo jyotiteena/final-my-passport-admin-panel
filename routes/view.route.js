@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Admin = require('../models/admin.model')
+const Category = require('../models/category.model')
 const categoryModel = require('../models/category.model')
 const isAuthenticated = require('../utils/loginMiddleware')
 
@@ -13,7 +14,7 @@ router.get('/addCategory', isAuthenticated, (req, res) => {
     res.render('pages/addCategory')
 })
 
-router.get('/viewCategory',isAuthenticated,  async (req, res) => {
+router.get('/viewCategory', isAuthenticated, async (req, res) => {
     const category = await categoryModel.find()
     res.render('pages/viewCategory', { category })
 })
@@ -40,8 +41,15 @@ router.get('/logout', isAuthenticated, (req, res) => {
 })
 
 router.get('/myprofile', isAuthenticated, async (req, res) => {
-    const singleAdmin = await Admin.findOne({ email:req.user.email })
-    res.render('pages/myProfile',{admin:singleAdmin})
+    const singleAdmin = await Admin.findOne({ email: req.user.email })
+    res.render('pages/myProfile', { admin: singleAdmin })
+})
+
+
+//// subcategory
+router.get('/addSubcategory', async (req,res)=>{
+    const categories = await Category.find()
+    res.render('pages/addSubcategory',{categories})
 })
 
 module.exports = router

@@ -7,21 +7,21 @@ module.exports = (passport) => {
 
   passport.use(
     new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
-     try {
-       const admin = await Admin.findOne({ email });
-       if (!admin) {
-         return done(null, false, console.log("user not found"))
-       }
- 
-       const match = await hashToPlain(password, admin.password);
-       if (!match) {
-         return done(null, false, console.log("password not match"))
-       }
- 
-       done(null,admin)
-     } catch (error) {
-      console.log(error)
-     }
+      try {
+        const admin = await Admin.findOne({ email });
+        if (!admin) {
+          return done(null, false, console.log("user not found"))
+        }
+
+        const match = await hashToPlain(password, admin.password);
+        if (!match) {
+          return done(null, false, console.log("password not match"))
+        }
+
+        done(null, admin)
+      } catch (error) {
+        console.log(error)
+      }
     })
   )
 

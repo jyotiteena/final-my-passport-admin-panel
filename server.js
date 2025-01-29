@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000
 const session = require('express-session');
 const passport = require('passport')
 const Category = require('./routes/category.route')
+const Subcategory = require('./routes/subcategory.route')
 const View = require('./routes/view.route')
 const Admin = require('./routes/admin.route')
 const bodyParser = require('body-parser');
@@ -41,5 +42,6 @@ app.use(passport.session())
 //// routing
 app.use('/', View)
 app.use('/api/category', Category)
+app.use('/api/subcategory', Subcategory)
 app.use('/api/admin', Admin)
 app.listen(PORT, () => console.log(`Example app listening on PORT http://localhost:${PORT}`))
