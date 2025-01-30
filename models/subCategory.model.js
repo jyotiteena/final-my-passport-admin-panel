@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const subCategorySchema = new Schema({
     category: {
-        type: Schema.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Category"
     },
     sub_category: {

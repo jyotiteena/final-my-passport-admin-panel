@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const subCategorySchema = new Schema({
+const productSchema = new Schema({
     category: {
         type: Schema.ObjectId,
         ref: "Category"
@@ -12,5 +12,5 @@ const subCategorySchema = new Schema({
     p_name: String,
     p_price: Number
 })
-const Product = model('Subcategory', subCategorySchema)
+const Product = model('Product', productSchema)
 module.exports = Product

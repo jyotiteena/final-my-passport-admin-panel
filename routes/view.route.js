@@ -2,6 +2,8 @@ const router = require('express').Router()
 const Admin = require('../models/admin.model')
 const Category = require('../models/category.model')
 const categoryModel = require('../models/category.model')
+const Product = require('../models/product.model')
+const Subcategory = require('../models/subCategory.model')
 const isAuthenticated = require('../utils/loginMiddleware')
 
 
@@ -47,9 +49,49 @@ router.get('/myprofile', isAuthenticated, async (req, res) => {
 
 
 //// subcategory
-router.get('/addSubcategory', async (req,res)=>{
+router.get('/addSubcategory', isAuthenticated, async (req, res) => {
     const categories = await Category.find()
-    res.render('pages/addSubcategory',{categories})
+    res.render('pages/addSubcategory', { categories })
 })
+
+
+router.get('/viewSubCategory', isAuthenticated, async (req, res) => {
+    try {
+        const records = await Subcategory.find().populate('category');
+        res.render('pages/viewSubCategory', { records })
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+router.get('/addProduct', isAuthenticated, async (req, res) => {
+    try {
+        const categories = await Category.find();
+        let subcategories = [];
+
+        // If a category is selected, fetch its subcategories
+        if (req.query.categoryId) {
+            subcategories = await Subcategory.find({ category: req.query.categoryId });
+        }
+
+        res.render("pages/addProduct", { categories, subcategories, selectedCategory: req.query.categoryId || "" });
+    } catch (error) {
+        res.status(500).send("Error loading categories and subcategories");
+    }
+});
+
+router.get('/viewProduct', isAuthenticated, async (req, res) => {
+    try {
+        const records = await Product.find().populate('category').populate('sub_category');
+        console.log(records)
+        res.render('pages/viewProduct', { records })
+
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 
 module.exports = router

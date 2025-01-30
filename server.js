@@ -6,10 +6,7 @@ require('dotenv').config()
 const PORT = process.env.PORT || 5000
 const session = require('express-session');
 const passport = require('passport')
-const Category = require('./routes/category.route')
-const Subcategory = require('./routes/subcategory.route')
-const View = require('./routes/view.route')
-const Admin = require('./routes/admin.route')
+
 const bodyParser = require('body-parser');
 const authPassport = require('./config/passport')
 
@@ -39,9 +36,18 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
+//////////////// import routing files
+const Category = require('./routes/category.route')
+const Subcategory = require('./routes/subcategory.route')
+const View = require('./routes/view.route')
+const Admin = require('./routes/admin.route')
+const Product = require('./routes/product.route')
+
+
 //// routing
 app.use('/', View)
 app.use('/api/category', Category)
 app.use('/api/subcategory', Subcategory)
 app.use('/api/admin', Admin)
+app.use('/api/product', Product)
 app.listen(PORT, () => console.log(`Example app listening on PORT http://localhost:${PORT}`))
