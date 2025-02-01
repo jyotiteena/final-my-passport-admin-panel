@@ -93,5 +93,32 @@ router.get('/viewProduct', isAuthenticated, async (req, res) => {
     }
 })
 
+router.get('/updateProduct', isAuthenticated, async (req, res) => {
+    try {
+        const id = req.query.id;
+        const product = await Product.findById(id).populate('category').populate('sub_category');
+
+        const categories = await Category.find();
+        let subcategories = [];
+
+        // If a category is selected, fetch its subcategories
+        if (req.query.categoryId) {
+            console.log("if...................")
+            subcategories = await Subcategory.find({ category: req?.query?.categoryId });
+        }
+
+        res.render('pages/updateProduct', {
+            product,
+            categories,
+            subcategories,
+            selectedCategory: req.query.categoryId || ""
+        });
+    } catch (error) {
+        console.log('error:', error);
+    }
+});
+
+
+
 
 module.exports = router

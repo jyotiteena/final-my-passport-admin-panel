@@ -10,7 +10,6 @@ const passport = require('passport')
 const bodyParser = require('body-parser');
 const authPassport = require('./config/passport')
 
-console.log("passport..............")
 authPassport(passport)
 
 require('./config/db').dbconnect()

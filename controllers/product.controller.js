@@ -4,7 +4,6 @@ const fs = require('fs')
 exports.store = async (req, res) => {
     try {
         const { category, sub_category, p_name, p_price } = req.body;
-        console.log(req.body)
         const existProduct = await Product.findOne({ p_name }).countDocuments();
         if (existProduct > 0) {
             res.json({
@@ -44,4 +43,9 @@ exports.trash = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+exports.update = async (req,res)=>{
+    console.log(req.params)
+    console.log(req.body)
 }
