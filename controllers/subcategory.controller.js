@@ -1,11 +1,20 @@
 const Subcategory = require("../models/subCategory.model")
 
 exports.store = async (req, res) => {
-    await Subcategory.create(req.body)
-    res.redirect('/addSubCategory')
+    try {
+        await Subcategory.create(req.body)
+        res.redirect('/addSubCategory')
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 exports.trash = async (req, res) => {
-    const id = req.paras.id;
-    await Subcategory.findOneAndDelete(id)
+    try {
+        const id = req.params.id;
+        await Subcategory.findOneAndDelete(id)
+        res.redirect('/viewSubcategory')
+    } catch (error) {
+        console.log(error)
+    }
 }
