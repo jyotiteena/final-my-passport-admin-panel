@@ -1,5 +1,6 @@
 const Product = require("../models/product.model");
-
+const path = require('path')
+const fs = require('fs')
 exports.store = async (req, res) => {
     try {
         const { category, sub_category, p_name, p_price } = req.body;
@@ -20,6 +21,27 @@ exports.store = async (req, res) => {
 }
 
 exports.trash = async (req, res) => {
-    const id = req.params.id;
+    try {
+        const id = req.params.id;
 
+        ///// get single product for unlink image
+        const singleProduct = await Product.findById(id);
+        if (singleProduct) {
+            const singleImage = path.join(__dirname, "../uploads/product", singleProduct.p_image)
+            fs.unlink(singleImage, async (err) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    const product = await Product.findByIdAndDelete(id)
+                    if (product) {
+                        res.redirect('/viewProduct')
+                    }
+                }
+            })
+        }
+
+
+    } catch (error) {
+        console.log(error)
+    }
 }

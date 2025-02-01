@@ -85,7 +85,7 @@ router.get('/addProduct', isAuthenticated, async (req, res) => {
 router.get('/viewProduct', isAuthenticated, async (req, res) => {
     try {
         const records = await Product.find().populate('category').populate('sub_category');
-        console.log(records)
+
         res.render('pages/viewProduct', { records })
 
     } catch (error) {
