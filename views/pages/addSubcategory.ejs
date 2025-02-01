@@ -33,14 +33,14 @@
                                         <label for="fname"
                                             class="col-sm-3 text-right control-label col-form-label">SubCategory
                                             Name</label>
-                                            <select class="select2 form-control custom-select col-sm-9" name="category">
-                                                <option>Select</option>
-                                                    <% categories.forEach((category)=>{%>
-                                                        <option value=<%=category._id%>>
-                                                            <%=category.cat_name%>
-                                                        </option>
-                                                        <%}) %>
-                                            </select>
+                                        <select class="select2 form-control custom-select col-sm-9" name="category">
+                                            <option>Select</option>
+                                            <% categories.forEach((category)=>{%>
+                                                <option value=<%=category._id%>>
+                                                    <%=category.cat_name%>
+                                                </option>
+                                                <%}) %>
+                                        </select>
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname"

@@ -1,0 +1,66 @@
+<%- include('../layout/headSection') -%>
+
+<body>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <%- include('../layout/header') -%>
+        <%- include('../layout/sidebar') -%>
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Sub Category</h4>
+                        <div class="ml-auto text-right">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Update</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <form class="form-horizontal shadow bg-white" method="post" action="/api/subcategory/<%= subcategory._id %>">
+                    <div class="card-body">
+                        <h4 class="card-title">Update Subcategory</h4>
+                        <div class="form-group row">
+                            <label for="category" class="col-sm-3 text-right control-label col-form-label">Category Name</label>
+                            <select class="select2 form-control custom-select col-sm-9" name="category">
+                                <option>Select Category</option>
+                                <% categories.forEach((category) => { %>
+                                    <option value="<%= category._id %>" <%= category._id.toString() === subcategory.category._id.toString() ? 'selected' : '' %>>
+                                        <%= category.cat_name %>
+                                    </option>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="sub_category" class="col-sm-3 text-right control-label col-form-label">SubCategory Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="<%= subcategory.sub_category %>" name="sub_category" class="form-control" id="sub_category" placeholder="SubCategory Name Here">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button class="btn btn-warning">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="footer text-center">
+                All Rights Reserved by Matrix-admin. Designed and Developed by <a href="https://wrappixel.com">WrapPixel</a>.
+            </footer>
+        </div>
+    </div>
+    <%- include('../layout/jsLink.ejs') -%>
+</body>
+
+</html>
