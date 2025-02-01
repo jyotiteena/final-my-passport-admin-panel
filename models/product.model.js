@@ -10,7 +10,8 @@ const productSchema = new Schema({
         ref: "Subcategory"
     },
     p_name: String,
-    p_price: Number
+    p_price: Number,
+    p_image:String
 })
 const Product = model('Product', productSchema)
 module.exports = Product

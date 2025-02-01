@@ -30,7 +30,8 @@
 
                         <div class="container my-5">
                             <!-- Form for adding product -->
-                            <form class="form-horizontal shadow bg-white" method="post" action="/api/product">
+                            <form class="form-horizontal shadow bg-white" method="post" action="/api/product"
+                                enctype="multipart/form-data">
                                 <div class="card-body">
                                     <h4 class="card-title">Add Product</h4>
 
@@ -72,18 +73,28 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname"
-                                            class="col-sm-3 text-right control-label col-form-label">Product Name</label>
+                                            class="col-sm-3 text-right control-label col-form-label">Product
+                                            Name</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="p_name" class="form-control" id="fname"
+                                            <input type="text" name="p_name" class="form-control"
                                                 placeholder="Product Name Here">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname"
-                                            class="col-sm-3 text-right control-label col-form-label">Product Price</label>
+                                            class="col-sm-3 text-right control-label col-form-label">Product
+                                            Price</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="p_price" class="form-control" id="fname"
+                                            <input type="text" name="p_price" class="form-control"
                                                 placeholder="Product Price Here">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname"
+                                            class="col-sm-3 text-right control-label col-form-label">Product
+                                            Image</label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="p_image" class="form-control">
                                         </div>
                                     </div>
                                 </div>

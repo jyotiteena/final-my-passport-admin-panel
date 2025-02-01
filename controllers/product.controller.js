@@ -11,11 +11,7 @@ exports.store = async (req, res) => {
                 message: "product Already Exist",
             });
         } else {
-            await Product.create({ category, sub_category, p_name, p_price });
-            // res.json({
-            //   success: true,
-            //   message: "Category Added",
-            // });
+            await Product.create({ category, sub_category, p_name, p_price, p_image: req?.file?.filename });
             res.redirect("/viewProduct");
         }
     } catch (error) {
@@ -23,7 +19,7 @@ exports.store = async (req, res) => {
     }
 }
 
-exports.trash = async (req,res)=>{
+exports.trash = async (req, res) => {
     const id = req.params.id;
-    
+
 }
