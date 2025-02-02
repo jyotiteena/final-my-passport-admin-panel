@@ -42,13 +42,12 @@
                                             Category Name
                                         </label>
                                         <div class="col-sm-9">
-                                            <select name="category" class="form-control"
-                                                onchange="window.location.href='/updateProduct?categoryId=' + this.value">
+                                            <select name="category" class="form-control">
                                                 <option value="">-- select category --</option>
                                                 <% categories.forEach(category=> { %>
                                                     <option value="<%= category._id %>"
-                                                        <%=category._id.toString()===selectedCategory ? "selected" : product?.category?.cat_name
-                                                        %>>
+                                                        <%=category._id.toString()===product.category._id.toString()
+                                                        ? "selected" :"" %>>
                                                         <%= category.cat_name %>
                                                     </option>
                                                     <% }); %>
@@ -65,7 +64,9 @@
                                             <select id="subcategory" name="sub_category" class="form-control">
                                                 <option value="">--Select Subcategory--</option>
                                                 <% subcategories.forEach(subcategory=> { %>
-                                                    <option value="<%= subcategory._id %>">
+                                                    <option value="<%= subcategory._id %>"
+                                                        <%=subcategory._id.toString()===product.sub_category._id.toString()
+                                                        ? "selected" :"" %>>
                                                         <%= subcategory.sub_category %>
                                                     </option>
                                                     <% }); %>
@@ -119,6 +120,27 @@
         </div>
 
         <%- include('../layout/jsLink.ejs') -%>
+            <script>
+                document.getElementById("category").addEventListener("change", function () {
+                    const categoryId = this.value;
+                    const subcategoryDropdown = document.getElementById("subcategory");
+
+                    if (!categoryId) {
+                        subcategoryDropdown.innerHTML = '<option value="">Select Subcategory</option>';
+                        return;
+                    }
+
+                    fetch(`/api/subcategory/single?categoryId=${categoryId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            subcategoryDropdown.innerHTML = '<option value="">Select Subcategory</option>';
+                            data.forEach(subcategory => {
+                                subcategoryDropdown.innerHTML += `<option value="${subcategory._id}">${subcategory.sub_category}</option>`;
+                            });
+                        })
+                        .catch(error => console.error("Error fetching subcategories:", error));
+                });
+            </script>
 
     </body>
 

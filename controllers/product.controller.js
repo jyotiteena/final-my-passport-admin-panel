@@ -48,4 +48,5 @@ exports.trash = async (req, res) => {
 exports.update = async (req,res)=>{
     console.log(req.params)
     console.log(req.body)
+    console.log(req.file)
 }

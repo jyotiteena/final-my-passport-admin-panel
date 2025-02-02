@@ -58,8 +58,8 @@ router.get('/addSubcategory', isAuthenticated, async (req, res) => {
 router.get('/viewSubCategory', isAuthenticated, async (req, res) => {
     try {
         const records = await Subcategory.find().populate('category');
+        console.log(records)
         res.render('pages/viewSubCategory', { records })
-
     } catch (error) {
         console.log(error)
     }
@@ -96,7 +96,6 @@ router.get('/addProduct', isAuthenticated, async (req, res) => {
 router.get('/viewProduct', isAuthenticated, async (req, res) => {
     try {
         const records = await Product.find().populate('category').populate('sub_category');
-
         res.render('pages/viewProduct', { records })
 
     } catch (error) {
@@ -109,19 +108,13 @@ router.get('/updateProduct', isAuthenticated, async (req, res) => {
         const id = req.query.id;
         const product = await Product.findById(id).populate('category').populate('sub_category');
 
+
         const categories = await Category.find();
-        let subcategories = [];
-
-        // If a category is selected, fetch its subcategories
-        if (req.query.categoryId) {
-            subcategories = await Subcategory.find({ category: req?.query?.categoryId });
-        }
-
+        const subcategories = await Subcategory.find().populate('category');
         res.render('pages/updateProduct', {
             product,
-            categories,
             subcategories,
-            selectedCategory: req.query.categoryId || ""
+            categories,
         });
     } catch (error) {
         console.log('error:', error);

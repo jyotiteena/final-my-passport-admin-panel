@@ -7,7 +7,6 @@ const subCategorySchema = new Schema({
     },
     sub_category: {
         type: String,
-        unique:true
     }
 })
 const Subcategory = model('Subcategory', subCategorySchema)
